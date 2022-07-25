@@ -38,21 +38,27 @@ input_date.addEventListener('change', () => {
     const web_date = document.querySelector(`.web_date_${i}`);
     const business_date = document.getElementById(`business_date${i}`);
     const business_date_value = Number(business_date.value);
-    const gmt_end_date = new Date(end_date)
-    const next_end_date = new Date(gmt_end_date.setDate(gmt_end_date.getDate() + 1));
-    start_date = formatDate(next_end_date)
-    for (let j = 1; j < business_date_value; j++) {
-      const increment_date = new Date(
-        next_end_date.setDate(next_end_date.getDate() + 1)
-      );
-      const format_date = formatDate(increment_date); 
-      if (
-        increment_date.getDay() === 0 ||
-        increment_date.getDay() === 6 ||
-        isHoliday(format_date)
-      )
-        j--;
-      else end_date = format_date;
+    const gmt_end_date = new Date(end_date);
+    const next_end_date = new Date(
+      gmt_end_date.setDate(gmt_end_date.getDate() + 1)
+    );
+    start_date = formatDate(next_end_date);
+    if (business_date_value === 1) {
+      end_date = start_date;
+    } else {
+      for (let j = 1; j < business_date_value; j++) {
+        const increment_date = new Date(
+          next_end_date.setDate(next_end_date.getDate() + 1)
+        );
+        const format_date = formatDate(increment_date);
+        if (
+          increment_date.getDay() === 0 ||
+          increment_date.getDay() === 6 ||
+          isHoliday(format_date)
+        )
+          j--;
+        else end_date = format_date;
+      }
     }
     web_date.innerHTML =
       start_date === end_date ? start_date : `${start_date}〜${end_date}`;
