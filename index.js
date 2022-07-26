@@ -31,7 +31,6 @@ const input_date = document.getElementById('input_date');
 const date_result = document.querySelectorAll('.date_result');
 
 input_date.addEventListener('change', () => {
-  let input_date_value = new Date(input_date.value);
   let start_date;
   let end_date = input_date.value;
   for (let i = 0; i <= date_result.length; i++) {
@@ -42,7 +41,7 @@ input_date.addEventListener('change', () => {
     const next_end_date = new Date(
       gmt_end_date.setDate(gmt_end_date.getDate() + 1)
     );
-    start_date = formatDate(next_end_date);
+    start_date = i === 0 ? input_date.value : formatDate(next_end_date);
     if (business_date_value === 1) {
       end_date = start_date;
     } else {
